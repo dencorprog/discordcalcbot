@@ -1,7 +1,7 @@
 // const fs = require('fs');
 // var logger = require('winston');
 const Discord = require('discord.js');
-const { token, limitlessID, limitlessCalcbotCh, myCalcbotCh, myBotCh} = require('./config.json');
+const { token, limitlessID, limitlessCalcbotCh, myCalcbotCh, myBotCh } = require('./config.json');
 
 const client = new Discord.Client();
 
@@ -14,7 +14,7 @@ function formatNumber(num) {
 }
 
 client.on('message', msg => {
-    if (!(msg.content.startsWith('Session data') && msg.channel.id === limitlessCalcbotCh) || msg.author.bot) return; 
+    if (!(msg.content.startsWith('Session data') && msg.channel.id === limitlessCalcbotCh) || msg.author.bot) return;
     // channel hunt-boss-share on own discord: myCalcbotCh
     const lines = msg.content.split(`\n`);
 
@@ -23,7 +23,7 @@ client.on('message', msg => {
         msg.reply("Invalid party hunt analyser!");
         return;
     }
-    
+
     const ptmembers = lines.length / 6 - 1;
     // msg.channel.send("Amount of party members: " + ptmembers);
 
@@ -36,10 +36,11 @@ client.on('message', msg => {
     for (let i = 0; i <= ptmembers - 1; i++) {
         let tbltmp = [];
         ptmember[i] = lines[6 * (i + 1)].split("(")[0].trimRight();
-        // if(ptmember[i] === "certain name ") {
-            // msg.reply("Error"); // msg.reply(`I'm not going to calculate for member ${ptmember[i]}`);
-            // return;
-        // }
+        if (ptmember[i] === "Alfoxon" || ptmember[i] === "Piglet Our" || ptmember[i] === "Kana Kid" || ptmember[i] === "Slime Junior"
+            || ptmember[i] === "Artichunter" || ptmember[i] === "Jeoxheaa" || ptmember[i] === "Aquel Xelion" || ptmember[i] === "Stagknight") {
+            msg.reply(`You are not supposed to hunt with ${ptmember[i]}`);
+            return;
+        }
         ptmemberbalance[i] = parseInt(lines[6 * (i + 1) + 3].trim().split(" ")[1].replace(/,/g, ''));
         // msg.channel.send("Party member " + i + ": " + ptmember[i] + "; balance: " + ptmemberbalance[i]);
         // console.log("Party member " + i + ": " + ptmember[i] + "; balance: " + ptmemberbalance[i]);
@@ -49,7 +50,7 @@ client.on('message', msg => {
         // console.log(tbl);
     }
 
-    
+
     console.log(tbl);
     // let avg = Math.round(totalbalance / ptmembers);
     const avg = tbl.reduce((a, c) => a + c[1], 0) / tbl.length;
@@ -69,7 +70,6 @@ client.on('message', msg => {
     let outcome = [];
     let transfers = [];
     while (first < last && sortedTbl[first][1] < avgr) {
-        // sanity check
         if (sortedTbl[last][1] > avgr) {
             const avgDiffer = Math.ceil(avgr - sortedTbl[first][1]);
             const minus = Math.ceil(sortedTbl[last][1] - (avgDiffer));
