@@ -1,5 +1,6 @@
 // const fs = require('fs');
 // var logger = require('winston');
+const axios = require('axios');
 const Discord = require('discord.js');
 const { token, limitlessID, limitlessCalcbotCh, myCalcbotCh, myBotCh } = require('./config.json');
 
@@ -36,7 +37,7 @@ client.on('message', msg => {
     for (let i = 0; i <= ptmembers - 1; i++) {
         let tbltmp = [];
         ptmember[i] = lines[6 * (i + 1)].split("(")[0].trimRight();
-        if (ptmember[i] === "Alfoxon" || ptmember[i] === "Piglet Our" || ptmember[i] === "Kana Kid" || ptmember[i] === "Slime Junior"
+        if (ptmember[i] === "Piglet Our" || ptmember[i] === "Kana Kid" || ptmember[i] === "Slime Junior"
             || ptmember[i] === "Artichunter" || ptmember[i] === "Jeoxheaa" || ptmember[i] === "Aquel Xelion" || ptmember[i] === "Stagknight") {
             msg.reply(`You are not supposed to hunt with ${ptmember[i]}`);
             return;
@@ -71,8 +72,8 @@ client.on('message', msg => {
     let transfers = [];
     while (first < last && sortedTbl[first][1] < avgr) {
         if (sortedTbl[last][1] > avgr) {
-            const avgDiffer = Math.ceil(avgr - sortedTbl[first][1]);
-            const minus = Math.ceil(sortedTbl[last][1] - (avgDiffer));
+            const avgDiffer = Math.round(avgr - sortedTbl[first][1]);
+            const minus = Math.round(sortedTbl[last][1] - (avgDiffer));
 
             if (minus >= avgr) {
                 outcome.push(`**${sortedTbl[last][0]}** should give **${formatNumber(avgDiffer)}** gp to **${sortedTbl[first][0]}**`);
@@ -100,4 +101,4 @@ client.on('message', msg => {
     msg.reply(msgreply);
 });
 
-client.login(process.env.token);
+client.login("Njg0NTc1MDczMDUwNTU4NTky.XmTVMA.XnQ1hhq-DBBUPyVrGhMdXowZhPo");
