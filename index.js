@@ -101,4 +101,4 @@ client.on('message', msg => {
     msg.reply(msgreply);
 });
 
-client.login("Njg0NTc1MDczMDUwNTU4NTky.XmTVMA.XnQ1hhq-DBBUPyVrGhMdXowZhPo");
+client.login(process.env.token);
